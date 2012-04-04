@@ -15,6 +15,11 @@
 #include <boost/numeric/ublas/io.hpp>
 #include <boost/numeric/ublas/storage.hpp>
 
+void mod( std::vector< std::complex< double > >& r )
+{
+    r[0] = std::complex<double>( 3, -1 );
+}
+
 // Test sub class 
 class TEST2 {
     public:
@@ -30,7 +35,7 @@ class TEST {
     ~TEST(){};
     std::vector< double > x;
     double y;
-    int do_stuff( std::vector< double >& r_data )
+    int do_stuff( std::vector< double >& r_data, double d )
     {
         r_data.resize(5);
         for ( std::size_t ii=0; ii < r_data.size(); ii++ )
@@ -56,6 +61,8 @@ int main(void)
 
     double a1[10];
 
+    double * heap_array = ( double * ) malloc( sizeof( double ) * 10 );
+
     Eigen::MatrixXd m(1,10);
 
     // Push some data around
@@ -65,11 +72,12 @@ int main(void)
         a1[ii] = 5*ii;
         vx[ii] = ii;
         m(0,ii) = ii * M_PI;
-        vc(ii) = ( ii * M_PI, ii*M_PI);
         std::complex<double> q;
         q.real(M_PI *ii);
-        q.imag(1);
+        q.imag(M_PI *ii);
         v2.push_back( q );
+        vc(ii) = q;
+        heap_array[ ii ] = M_PI * ii;
     }
     
 
@@ -78,7 +86,9 @@ int main(void)
     T.x = v1;
     T.T2.x = v2;
     std::vector< double > v4;
-    T.do_stuff( v4 );
+    T.do_stuff( v4, M_PI );
+
+    mod(T.T2.x);
 
 
     std::cout << "Break on line " <<  __LINE__ << " to plot: \n"
@@ -92,7 +102,11 @@ int main(void)
               << " .. T.T2.x: stl double vector as a member of a class as a member of a class\n"
               << std::endl;
 
+    std::cout << "vc: " << vc << std::endl;
+
     std::cout << "Now try combined plots: plot vx vc T.x T.T2.x " << std::endl;
+
+    free( heap_array );
 
     return 0;
 }
