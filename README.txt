@@ -36,13 +36,9 @@ HOWTO:
 
 3. Debug the example
     gdb example                 # launch example program
-    b 41                        # give it a break point and run it
+    b 94                        # give it a break point and run it
     r
-    plot v1                     # stl vector<double>
-    plot a1                     # c array of doubles
-    plot m                      # Eigen Matrix (1 row)
-    plot_boost vx               # Boost numerics vector<double>
-    plot_complex_boost vc       # Boost numerics vector<complex>
+    plot v1 a1 vc m             # plot a bunch of data of different types
 
 3. Hack it
     The examples here are really simple.  It's just not entirely intuitive.  Things you could easily do:
@@ -50,6 +46,13 @@ HOWTO:
         2. Send matrices to images
         3. Add more arguments to the commands - plot a range, plot a column, etc.
         4. Make a single plot command that figures out the type and does the write things.
+
+OTHER USEFUL STUFF:
+==================
+
+savemat - saves arbitrary buffers as a .mat file [ requires scipy ]
+showframe - stack frame explorer
+
 
 Enjoy
 
