@@ -64,6 +64,8 @@ int main(void)
     double * heap_array = ( double * ) malloc( sizeof( double ) * 10 );
 
     Eigen::MatrixXd m(1,10);
+    Eigen::ArrayXcd eigen_complex_array(10);
+    Eigen::ArrayXd eigen_double_array(10);
 
     // Push some data around
     for ( std::size_t ii=0; ii < 10; ii++ )
@@ -78,6 +80,8 @@ int main(void)
         v2.push_back( q );
         vc(ii) = q;
         heap_array[ ii ] = M_PI * ii;
+        eigen_double_array( ii ) = M_PI * ii;
+        eigen_complex_array( ii ) = M_PI * ii + 0.1j;
     }
     
 
@@ -100,6 +104,8 @@ int main(void)
               << " .. vc: Boost Numerics complex double vector\n"
               << " .. T.x: stl double vector as a member of a class\n"
               << " .. T.T2.x: stl double vector as a member of a class as a member of a class\n"
+              << " .. eigen_double_array for an Eigen double array\n"
+              << " .. eigen_complex_array for an Eigen complex array\n"
               << std::endl;
 
     std::cout << "vc: " << vc << std::endl;

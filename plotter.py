@@ -71,6 +71,26 @@ def get_data( args ):
                 u = np.array(vals)
                 data.append( u )
         ########################################
+        # Eigen
+        ########################################
+        elif x_str.find( "Eigen::Array" ) >= 0:
+            if x_str.find("std::complex") >= 0:
+                vals = []
+                brace_pos = x_str.find('{') 
+                brace_pos2 = x_str.rfind('}')
+                parts = string.split( x_str[ brace_pos+1:brace_pos2 ], "," )
+                for part in parts:
+                    vals.append( eval(part[1:-1].split( "=" )[1]) )
+                u = np.array(vals)
+                data.append( u )
+            else:
+                brace_pos = x_str.find('{') 
+                brace_pos2 = x_str.find('}')
+                x_str = '[ %s ]' % x_str[ brace_pos+1:brace_pos2]
+                s = eval( '%s' % x_str )
+                u = np.array( s ) 
+                data.append(u)
+        ########################################
         # Unknown, try parsing the string
         ########################################
         else:
