@@ -66,6 +66,8 @@ int main(void)
     Eigen::MatrixXd m(1,10);
     Eigen::ArrayXcd eigen_complex_array(10);
     Eigen::ArrayXd eigen_double_array(10);
+    Eigen::ArrayXcd eca2(2048);
+    Eigen::ArrayXd  eda2(2048);
 
     // Push some data around
     for ( std::size_t ii=0; ii < 10; ii++ )
@@ -82,6 +84,12 @@ int main(void)
         heap_array[ ii ] = M_PI * ii;
         eigen_double_array( ii ) = M_PI * ii;
         eigen_complex_array( ii ) = M_PI * ii + 0.1j;
+    }
+
+    for ( std::size_t ii=0; ii < eca2.size(); ii++ )
+    {
+        eda2(ii) = ii;
+        eca2(ii) = ii + 0.1j;
     }
     
 

@@ -74,21 +74,26 @@ def get_data( args ):
         # Eigen
         ########################################
         elif x_str.find( "Eigen::Array" ) >= 0:
+            #
+            # NOTE: This only works for dynamic Eigen::Array 
+            #
             if x_str.find("std::complex") >= 0:
+                ptr = x['m_storage']['m_data']
+                end = x['m_storage']['m_rows']
                 vals = []
-                brace_pos = x_str.find('{') 
-                brace_pos2 = x_str.rfind('}')
-                parts = string.split( x_str[ brace_pos+1:brace_pos2 ], "," )
-                for part in parts:
-                    vals.append( eval(part[1:-1].split( "=" )[1]) )
-                u = np.array(vals)
-                data.append( u )
+                for i in range(end):
+                    vals.append( eval( str( ptr.dereference()['_M_value'] ) ) ) 
+                    ptr = ptr + 1
+                u = np.array( vals ) 
+                data.append(u)
             else:
-                brace_pos = x_str.find('{') 
-                brace_pos2 = x_str.find('}')
-                x_str = '[ %s ]' % x_str[ brace_pos+1:brace_pos2]
-                s = eval( '%s' % x_str )
-                u = np.array( s ) 
+                ptr = x['m_storage']['m_data']
+                end = x['m_storage']['m_rows']
+                vals = []
+                for i in range(end):
+                    vals.append( ptr.dereference() ) 
+                    ptr = ptr + 1
+                u = np.array( vals ) 
                 data.append(u)
         ########################################
         # Unknown, try parsing the string
