@@ -128,9 +128,9 @@ class Plotter( gdb.Command ):
         plot.show()
 # end class Plotter
 
-class StemPlotter( gdb.Command ):
+class PlotThreeD( gdb.Command ):
     def __init__( self ):
-        super( StemPlotter, self ).__init__("stem", gdb.COMMAND_OBSCURE )
+        super( PlotThreeD, self ).__init__("plot3", gdb.COMMAND_OBSCURE )
 
     def invoke( self, arg, from_tty ):
         args = string.split( arg )
@@ -143,10 +143,10 @@ class StemPlotter( gdb.Command ):
             if u.dtype.kind == 'c':
                 ax.plot( range(len(u)), u.real, u.imag )
         plot.show()
-# end class StemPlotter
+# end class PlotThreeD
 
    
 
     
 Plotter()
-StemPlotter()
+PlotThreeD()

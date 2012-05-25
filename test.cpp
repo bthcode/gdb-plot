@@ -112,8 +112,8 @@ int main(void)
               << " .. vc: Boost Numerics complex double vector\n"
               << " .. T.x: stl double vector as a member of a class\n"
               << " .. T.T2.x: stl double vector as a member of a class as a member of a class\n"
-              << " .. eigen_double_array for an Eigen double array\n"
-              << " .. eigen_complex_array for an Eigen complex array\n"
+              << " .. eda2 for an Eigen double array\n"
+              << " .. eca2 for an Eigen complex array\n"
               << std::endl;
 
     std::cout << "vc: " << vc << std::endl;

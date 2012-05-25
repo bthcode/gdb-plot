@@ -68,6 +68,32 @@ def get_data( args ):
                 u = np.array(vals)
                 data[ arg ] = u
         ########################################
+        # Eigen
+        ########################################
+        elif x_str.find( "Eigen::Array" ) >= 0:
+            #
+            # NOTE: This only works for dynamic Eigen::Array 
+            #
+            if x_str.find("std::complex") >= 0:
+                ptr = x['m_storage']['m_data']
+                end = x['m_storage']['m_rows']
+                vals = []
+                for i in range(end):
+                    vals.append( eval( str( ptr.dereference()['_M_value'] ) ) ) 
+                    ptr = ptr + 1
+                u = np.array( vals ) 
+                data[ arg ] = u
+            else:
+                ptr = x['m_storage']['m_data']
+                end = x['m_storage']['m_rows']
+                vals = []
+                for i in range(end):
+                    vals.append( ptr.dereference() ) 
+                    ptr = ptr + 1
+                u = np.array( vals ) 
+                data[ arg ] = u
+
+        ########################################
         # Unknown, try parsing the string
         ########################################
         else:
