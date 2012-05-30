@@ -68,6 +68,9 @@ int main(void)
     Eigen::ArrayXd eigen_double_array(10);
     Eigen::ArrayXcd eca2(2048);
     Eigen::ArrayXd  eda2(2048);
+    Eigen::ArrayXd  sin_array(2048);
+    Eigen::ArrayXd  cos_array(2048);
+    Eigen::ArrayXd  tan_array(2048);
 
     // Push some data around
     for ( std::size_t ii=0; ii < 10; ii++ )
@@ -88,9 +91,13 @@ int main(void)
 
     for ( std::size_t ii=0; ii < eca2.size(); ii++ )
     {
-        eda2(ii) = ii;
+        eda2(ii) = ii * 0.01;
         eca2(ii) = ii + 0.1j;
     }
+
+    sin_array = eda2.sin();
+    cos_array = eda2.cos();
+    tan_array = eda2.tan();
     
 
     // Stand up a class
@@ -114,6 +121,7 @@ int main(void)
               << " .. T.T2.x: stl double vector as a member of a class as a member of a class\n"
               << " .. eda2 for an Eigen double array\n"
               << " .. eca2 for an Eigen complex array\n"
+              << " .. sin_array, cos_array, tan_array for trig plots\n"
               << std::endl;
 
     std::cout << "vc: " << vc << std::endl;
