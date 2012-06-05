@@ -24,24 +24,34 @@ REQUIREMENTS:
 python, numerics, matplotlib, scipy
 gdb >= 7.0
 
-To use the example, you'll need boost-devel and eigen3-devel packages
+The examples are divided up so you only need the dependencies for the example you want to run:
+
+- stl_examples : gcc/g++ and libstdc++
+- boost_numerics_examples : boost numerics (boost-devel)
+- eigen_examples : eigen3 library ( eigen3-devel )
 
 HOWTO:
 =====
 1. Configure gdb
      add the lines in gdbinit to ~/.gdbinit, fix the paths
+     NOTE: REPLACE 'THIS DIRECTORY' with the root directory of this repository
 
-2. Build the example 
-     g++ example.cpp -I/usr/include/eigen3 -o example -g
+2. Build any examples you want:
 
-3. Debug the example
-    gdb example                 # launch example program
-    b 106                        # give it a break point and run it
+   cd examples
+   STL Example            : g++ -g stl_example.cpp -o stl_example
+   Boost Numerics Example : g++ -g boost_numerics_example.cpp -o boost_example
+   Eigen3 Example         : g++ -g -I/usr/include/eigen3 eigen_example.cpp -o eigen_example
+
+3. Debug the examples
+
+    NOTE: each example will print out a useful line to break on, and things you may want to plot.  Just run it to get that printout.
+
+    gdb stl_example              # launch example program
+    b 91                         # give it a break point and run it
     r
-    plot v1 a1 vc m             # plot a bunch of data of different types
-    plot3 eca2                  # Plot a complex array in 3D
-    savemat mymatfile eca2      # Save array eca2 to a matlab .mat file 
-    show_frame                  # Show a nice printout of the current stack frame
+    plot v1 a1                  # plot a bunch of data of different types
+    savemat mymatfile v1 a1     # Save array eca2 to a matlab .mat file 
 
 3. Hack it
     The examples here are really simple.  It's just not entirely intuitive.  Things you could easily do:
