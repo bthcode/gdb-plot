@@ -125,6 +125,9 @@ class Plotter( gdb.Command ):
                 ax.plot( np.abs(u) )
             else:
                 ax.plot( u )
+        leg = ax.legend((args),
+            'upper right', shadow=False)
+        leg.get_frame().set_alpha(0.5)
         plot.show()
 # end class Plotter
 
@@ -142,6 +145,9 @@ class PlotThreeD( gdb.Command ):
         for  u in data:
             if u.dtype.kind == 'c':
                 ax.plot( range(len(u)), u.real, u.imag )
+        leg = ax.legend((args),
+            'upper right', shadow=False)
+        leg.get_frame().set_alpha(0.5)
         plot.show()
 # end class PlotThreeD
 
