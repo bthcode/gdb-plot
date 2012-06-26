@@ -1,7 +1,11 @@
 INTRODUCTION:
 ============
 
-This is a set of utils for plotting from gdb commmand line.
+This is a set of utils for:
+
+- plotting from the gdb command line
+- saving c data to .mat files from gdb command line
+- sending data to an iPython engine from the gdb command line
 
 WARNING:
 =======
@@ -52,6 +56,16 @@ HOWTO:
     r
     plot v1 a1                  # plot a bunch of data of different types
     savemat mymatfile v1 a1     # Save array eca2 to a matlab .mat file 
+
+4. Send data to ipython
+
+   # in another shell:  
+   ipython kernel --pylab        # start an ipython server instance
+   # in a second shell
+   ipython console --existing=<connection string>  # connection string here ( spit out by previous command )
+   # in gdb
+   send <connection number> data   # send data to ipython
+   
 
 3. Hack it
     The examples here are really simple.  It's just not entirely intuitive.  Things you could easily do:
