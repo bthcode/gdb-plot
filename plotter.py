@@ -40,7 +40,7 @@ class PlotThreeD( gdb.Command ):
     def invoke( self, arg, from_tty ):
         args = string.split( arg )
 
-        data = get_data( args )
+        data = gp_get_data( args )
         fig = plot.figure()
         ax = p3.Axes3D( fig )
         ax.grid( True )
