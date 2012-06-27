@@ -3,7 +3,7 @@
 __author__="Brian Hone"
 
 
-import sys, os, string, time, pprint, subprocess
+import sys, os, string, pprint
 import gdb
 
 sym_types = {
