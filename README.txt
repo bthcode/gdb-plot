@@ -4,7 +4,6 @@ This is a set of utils for:
 
  * plotting from the gdb command line
  * saving c data to .mat files from gdb command line
- * sending data to an iPython engine from the gdb command line
  * exploring the stack frame
 
 == OVERVIEW: == 
@@ -37,7 +36,7 @@ HOWTO:
 1. Configure gdb
      A. Add the lines in gdbinit to ~/.gdbinit, fix the paths
        NOTE: REPLACE 'THIS DIRECTORY' with the root directory of this repository
-     B. If you want to save to mat file or send to an iPython engine, uncomment the lines 'import savemat' and/or 'import engine_send'
+     B. If you want to save to mat file, uncomment the lines 'import savemat'
 
 2. Build any examples you want:
 
@@ -56,37 +55,7 @@ HOWTO:
     plot v1 a1                  # plot a bunch of data of different types
     savemat mymatfile v1 a1     # Save array eca2 to a matlab .mat file 
 
-4. Send data to ipython
-
-   # A. Start an iPython kernel
-   ipython kernel --pylab        # start an ipython server instance
-
-        # that will print out the line:
-        [IPKernelApp] --existing kernel-9079.json # where 9079 is the connection ID
-
-   # B. Start an iPython console
-   ipython console --existing=9079  # connection string here ( spit out by previous command )
-
-
-   # C. Send Data from gdb to iPython
-   gdb examples/stl_example
-   b 91
-   r
-   send 9079 v1 a1                  # send data to iPython
-
-   # D. Now you have your data in your iPython console
-
-In [1]: a1
-Out[3]: array([ 0,  5, 10, 15, 20, 25, 30, 35, 40, 45])
-
-In [4]: v1
-Out[4]: 
-array([  0.        ,   6.28318531,  12.56637061,  18.84955592,
-        25.13274123,  31.41592654,  37.69911184,  43.98229715,
-        50.26548246,  56.54866776])
-
-
-3. Hack it
+4. Hack it
     The examples here are really simple.  It's just not entirely intuitive.  Things you could easily do:
         1. Handle more types
         2. Send matrices to images
