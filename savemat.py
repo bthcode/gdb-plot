@@ -20,6 +20,7 @@ class MatSaver( gdb.Command ):
         for i in range( len( raw_data ) ):
             key = args[i+1]
             key = key.replace( ".", "_" )
+            key = key.replace( "@", "_" )
             val = raw_data[i]
             data[ key ] = val
             print "Saving %s" % key   

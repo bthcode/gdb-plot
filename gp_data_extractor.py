@@ -6,11 +6,18 @@ __author__="Brian Hone"
 import sys, os, string
 import numpy as np
 import gdb
+import re
 
 def gp_get_data( args ):
     data = []
     I = 1j
     for arg in args:
+        n_elements = 1
+        # Numbers of elements are denoted with @
+        if arg.find( '@' ) >= 0:
+            arg_split = arg.split( '@' )
+            n_elements = eval( arg_split[-1] )
+            arg = arg_split[0]
         # If we're dealing with sub-structures, descend down
         if arg.find('.') >=0 :
             arg_split = arg.split( '.' )
@@ -25,10 +32,32 @@ def gp_get_data( args ):
             except: ## try a class member
                 x = gdb.selected_frame().read_var("this").dereference()[arg]
         x_str = str(x)
+        
+
+        # Search regexes for matching raw pointer and array types
+        types = [ 'int', 'float', 'double', 'short' ]
+        ptr_types = [ r'(%s *)' % t for t in types ]
+        arr_types = [ r'%s \[\w+\]' % t for t in types ]
+        ptr_matches = [ re.search( ptr_type, str(x.type) ) for ptr_type in ptr_types ]
+        arr_matches = [ re.search( arr_type, str(x.type) ) for arr_type in arr_types ]
+
+        ##########################################
+        # Pointer or Array
+        ##########################################
+        if not all( v is None for v in ptr_matches ) or not all( v is None for v in arr_matches ):
+            print "handling raw pointer with n_elements=%s" % ( n_elements )
+            ptr = x
+            end = n_elements
+            vals = []
+            for i in range(end):
+                vals.append( eval( str(ptr[i]) ) )
+            u = np.array(vals)
+            data.append(u)
+
         ########################################
         # BOOST VECTOR
         ########################################
-        if x_str.find( "boost" ) >= 0:
+        elif x_str.find( "boost" ) >= 0:
             ptr = x['data_']['data_']
             size = x['data_']['size_']
             vals = []

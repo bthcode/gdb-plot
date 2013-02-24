@@ -7,6 +7,10 @@
 echo "Building a few examples - "
 echo "  - If any build fails, that's probably ok - these are just examples"
 
+echo "Building raw pointers example..."
+g++ examples/raw_pointers.cpp -g -o examples/raw_pointers_example
+echo " ...debug it with 'gdb examples/raw_pointers_example"
+
 echo "Building stl example..."
 g++ examples/stl_example.cpp -g -o examples/stl_example
 echo " .. debug it with 'gdb examples/stl_example'"
