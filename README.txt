@@ -10,7 +10,7 @@ This is a set of utils for:
 
 I have attempted to show support for:
 
- * c array
+ * c array, c pointer
  * STL vector
  * Eigen vector, Eigen array
  * Boost vector
@@ -41,11 +41,18 @@ HOWTO:
 2. Build any examples you want:
 
    cd examples
+   Raw Pointers           : g++ -g raw_pointers.cpp -o raw_pointers_example
    STL Example            : g++ -g stl_example.cpp -o stl_example
    Boost Numerics Example : g++ -g boost_numerics_example.cpp -o boost_example
    Eigen3 Example         : g++ -g -I/usr/include/eigen3 eigen_example.cpp -o eigen_example
 
 3. Debug the examples
+
+    NOTE: data types that don't have built in sizes take '@n_elements' as arguments
+    gdb raw_pointers_example
+    b 52
+    r
+    plot d@1024 e@100           # plot 1024 samples of d and 100 of e -- NOTE: there's no checking that you haven't walked off the end of your buffer!
 
     NOTE: each example will print out a useful line to break on, and things you may want to plot.  Just run it to get that printout.
 
