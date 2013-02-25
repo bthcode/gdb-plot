@@ -33,18 +33,16 @@ def gp_get_data( args ):
                 x = gdb.selected_frame().read_var("this").dereference()[arg]
         x_str = str(x)
         
-
         # Search regexes for matching raw pointer and array types
         types = [ 'int', 'float', 'double', 'short' ]
-        ptr_types = [ r'(%s *)' % t for t in types ]
+        ptr_types = [ '%s *' % t for t in types ]
         arr_types = [ r'%s \[\w+\]' % t for t in types ]
-        ptr_matches = [ re.search( ptr_type, str(x.type) ) for ptr_type in ptr_types ]
         arr_matches = [ re.search( arr_type, str(x.type) ) for arr_type in arr_types ]
 
         ##########################################
         # Pointer or Array
         ##########################################
-        if not all( v is None for v in ptr_matches ) or not all( v is None for v in arr_matches ):
+        if not all( v is None for v in arr_matches ) or str(x.type) in ptr_types:
             print "handling raw pointer with n_elements=%s" % ( n_elements )
             ptr = x
             end = n_elements
