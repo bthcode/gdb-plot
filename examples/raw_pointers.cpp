@@ -10,16 +10,21 @@
 #include <iostream>
 #include <stdlib.h>
 
+typedef double * double_vec;
+
 int main(void)
 {
 
     double * d = ( double * ) malloc ( 1024 * sizeof(d) ); // raw c pointer
     double e[1024]; // raw c array
 
+    double_vec dv = ( double_vec ) malloc ( 1024 * sizeof(double * ) );
+
     for( std::size_t ii=0; ii < 1024; ii++ )
     {
         d[ii] = 0.25*ii;
         e[ii] = -0.33*ii;
+        dv[ii] = -0.44*ii;
     }
 
     // ---- print raw pointer ----- //
@@ -50,8 +55,9 @@ int main(void)
 
 
     std::cout << "Break on line " <<  __LINE__ << " to plot: \n"
-              << " .. d 1024: malloc'd pointer\n"
-              << " .. e 1024: c stack array\n"
+              << " .. d@1024: malloc'd pointer\n"
+              << " .. e@1024: c stack array\n"
+              << " .. dv@1024: double * malloc'd pointer typedef'd to a double_vec\n"
               << std::endl;
 
     std::cout << " .. Now try combined plots: plot d 1024 e 1024 " << std::endl;

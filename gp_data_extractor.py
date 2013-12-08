@@ -11,13 +11,23 @@ import re
 def gp_get_data( args ):
     data = []
     I = 1j
+
+    print args
+
     for arg in args:
         n_elements = 1
         # Numbers of elements are denoted with @
+        ptr_type = None
+        is_pointer = False
         if arg.find( '@' ) >= 0:
             arg_split = arg.split( '@' )
             n_elements = eval( arg_split[-1] )
             arg = arg_split[0]
+
+            print "n_elements = %s" % ( n_elements )
+            is_pointer = True
+
+
         # If we're dealing with sub-structures, descend down
         if arg.find('.') >=0 :
             arg_split = arg.split( '.' )
@@ -31,18 +41,24 @@ def gp_get_data( args ):
                 x = gdb.selected_frame().read_var(arg)
             except: ## try a class member
                 x = gdb.selected_frame().read_var("this").dereference()[arg]
-        x_str = str(x)
-        
-        # Search regexes for matching raw pointer and array types
-        types = [ 'int', 'float', 'double', 'short' ]
-        ptr_types = [ '%s *' % t for t in types ]
-        arr_types = [ r'%s \[\w+\]' % t for t in types ]
-        arr_matches = [ re.search( arr_type, str(x.type) ) for arr_type in arr_types ]
 
+        x_str = str( x.type.strip_typedefs() )
+
+        # Try to dereference for suspected pointer types
+        try:
+            if is_pointer:
+                # This will dereference, then strip tye typedefs - it will fail for a non-pointer type
+                y           = x.type.target().strip_typedefs()
+                ptr_type    = y.pointer() 
+        except:
+            pass
+
+
+        
         ##########################################
         # Pointer or Array
         ##########################################
-        if not all( v is None for v in arr_matches ) or str(x.type) in ptr_types:
+        if is_pointer and ptr_type != None:
             print "handling raw pointer with n_elements=%s" % ( n_elements )
             ptr = x
             end = n_elements

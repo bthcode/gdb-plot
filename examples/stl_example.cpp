@@ -15,6 +15,8 @@
 #include <vector>
 #include <stdlib.h>
 
+typedef std::vector< double > double_vec;
+
 /**
  * Modify a vector - demonstrates plotting reference variables
  */
@@ -85,9 +87,12 @@ int main(void)
 
     mod(T.T2.x);
 
+    double_vec dv = v1;
+
 
     std::cout << "Break on line " <<  __LINE__ << " to plot: \n"
               << " .. v1: stl double vector\n"
+              << " .. dv: stl double vector typedef'd to a double_vec\n"
               << " .. a1: c double array\n"
               << " .. v2: stl complex double vector\n"
               << " .. T.x: stl double vector as a member of a class\n"
