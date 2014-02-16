@@ -90,10 +90,11 @@ int main(void)
     double_vec dv = v1;
 
 
-    std::cout << "Break on line " <<  __LINE__ << " to plot: \n"
+    std::cout << "\n\n-------------------------------------------\n\n"
+              << "Break on line " <<  __LINE__ << " to plot: \n"
               << " .. v1: stl double vector\n"
               << " .. dv: stl double vector typedef'd to a double_vec\n"
-              << " .. a1: c double array\n"
+              << " .. a1@10: c double array\n"
               << " .. v2: stl complex double vector\n"
               << " .. T.x: stl double vector as a member of a class\n"
               << " .. T.T2.x: stl double vector as a member of a class as a member of a class\n"

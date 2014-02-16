@@ -40,9 +40,10 @@ int main(void)
     }
 
 
-    std::cout << "Break on line " <<  __LINE__ << " to plot: \n"
-              << " .. vx: Boost Numerics double vector\n"
-              << " .. vc: Boost Numerics complex double vector\n"
+    std::cout << "\n\n----------------------------------------------\n\n"
+              <<  "Break on line " <<  __LINE__ << " to plot: \n"
+              << " plot vx: Boost Numerics double vector\n"
+              << " plot vc: Boost Numerics complex double vector\n"
               << std::endl;
 
     std::cout << "Now try combined plots: plot vx vc" << std::endl;

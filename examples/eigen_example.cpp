@@ -48,11 +48,11 @@ int main(void)
     cos_array = eda2.cos();
     tan_array = eda2.tan();
     
-    std::cout << "Break on line " <<  __LINE__ << " to plot: \n"
-              << " ..  m: Eigen double vector\n"
-              << " .. eda2 for an Eigen double array\n"
-              << " .. eca2 for an Eigen complex array\n"
-              << " .. sin_array, cos_array, tan_array for trig plots\n"
+    std::cout << "\n\n----------------------------------------\n\n"
+              << "Break on line " <<  __LINE__ << " to plot: \n"
+              << "  plot eda2 for an Eigen double array\n"
+              << "  plot eca2 for an Eigen complex array\n"
+              << "  plot sin_array cos_array  tan_array for trig plots\n"
               << std::endl;
 
     return 0;

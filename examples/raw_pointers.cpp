@@ -8,23 +8,28 @@
  */
 
 #include <iostream>
+#include <complex>
 #include <stdlib.h>
-
-typedef double * double_vec;
 
 int main(void)
 {
 
-    double * d = ( double * ) malloc ( 1024 * sizeof(d) ); // raw c pointer
+    double * d = ( double * ) malloc ( 1024 * sizeof(double) ); // raw c pointer
     double e[1024]; // raw c array
 
-    double_vec dv = ( double_vec ) malloc ( 1024 * sizeof(double * ) );
+    std::complex< double > * x = ( std::complex< double > * ) malloc( 1024 * sizeof(std::complex<double> ) );
+
+    std::complex< float > x2[1024];
 
     for( std::size_t ii=0; ii < 1024; ii++ )
     {
         d[ii] = 0.25*ii;
         e[ii] = -0.33*ii;
-        dv[ii] = -0.44*ii;
+        x[ii].real( d[ii] );
+        x[ii].imag( e[ii] );
+
+        x2[ii].real( -d[ii] );
+        x2[ii].imag( -e[ii] );
     }
 
     // ---- print raw pointer ----- //
@@ -54,15 +59,17 @@ int main(void)
     std::cout << std::endl;
 
 
-    std::cout << "Break on line " <<  __LINE__ << " to plot: \n"
-              << " .. d@1024: malloc'd pointer\n"
-              << " .. e@1024: c stack array\n"
-              << " .. dv@1024: double * malloc'd pointer typedef'd to a double_vec\n"
+    std::cout << "\n\n---------------------------------------------\n\n"
+              << "Break on line " <<  __LINE__ << " to plot: \n"
+              << " plot d@1024: malloc'd pointer\n"
+              << " plot e@1024: c stack array\n"
+              << " plot x@1024: c complex double malloc'd pointer\n"
               << std::endl;
 
     std::cout << " .. Now try combined plots: plot d 1024 e 1024 " << std::endl;
 
     free(d);
+    free(x);
 
 
     return 0;
