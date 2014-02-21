@@ -67,7 +67,7 @@ Types Supported:
                 print "retreiving {0} elements".format( max_elements )
 
             ## NOT COMPLEX
-            if x_str.find( 'std::complex' ) < 0:
+            if x_str.find( 'complex' ) < 0:
                 for i in range( max_elements ):
                     loc = ptr + i
                     vals.append( eval( str(loc.dereference() )) )
@@ -149,7 +149,17 @@ Types Supported:
             end = n_elements
             vals = []
 
-            if x_str.find( 'std::complex' ) < 0:
+            # Attempt to determine if the data is complex
+            is_complex = False
+            try:
+                _ = x[0]['_M_value']
+                is_complex = True
+                print "handling data as complex"
+            except:
+                is_complex = False
+                print "handling data as uncomplex"
+
+            if not is_complex:
                 for i in range( n_elements ):
                     vals.append( eval( str( x[i] )) )
                 u = np.array( vals )
