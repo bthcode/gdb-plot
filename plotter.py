@@ -16,7 +16,7 @@ class Plotter( gdb.Command ):
         super( Plotter, self ).__init__("plot", gdb.COMMAND_OBSCURE )
 
     def invoke( self, arg, from_tty ):
-        args = string.split( arg )
+        args = arg.split()
 
         data = gp_get_data( args )
         fig = plot.figure()
@@ -38,7 +38,7 @@ class PlotThreeD( gdb.Command ):
         super( PlotThreeD, self ).__init__("plot3", gdb.COMMAND_OBSCURE )
 
     def invoke( self, arg, from_tty ):
-        args = string.split( arg )
+        args = arg.split()
 
         data = gp_get_data( args )
         fig = plot.figure()
@@ -46,7 +46,7 @@ class PlotThreeD( gdb.Command ):
         ax.grid( True )
         for  u in data:
             if u.dtype.kind == 'c':
-                ax.plot( range(len(u)), u.real, u.imag )
+                ax.plot( list(range(len(u))), u.real, u.imag )
         leg = ax.legend((args),
             'upper right', shadow=False)
         leg.get_frame().set_alpha(0.5)

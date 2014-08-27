@@ -13,7 +13,7 @@ class MatSaver( gdb.Command ):
         super( MatSaver, self ).__init__("savemat", gdb.COMMAND_OBSCURE )
 
     def invoke( self, arg, from_tty ):
-        args = string.split( arg )
+        args = arg.split()
         fname = args[0]
         raw_data = gp_get_data( args[1:] )
         data = {}
@@ -23,7 +23,7 @@ class MatSaver( gdb.Command ):
             key = key.replace( "@", "_" )
             val = raw_data[i]
             data[ key ] = val
-            print "Saving %s" % key   
+            print("Saving %s" % key)   
         sio.savemat( fname, data )
 # end class Plotter
 

@@ -32,7 +32,7 @@ Types Supported:
     data = []
     I = 1j
 
-    print args
+    print(args)
 
     for arg in args:
         n_elements = -1
@@ -47,10 +47,12 @@ Types Supported:
         try:
             x = gdb.parse_and_eval( arg )
         except:
-            print "Couldn't figure out how to access {0}".format(x)
+            print("Couldn't figure out how to access {0}".format(x))
             return
 
+        # strip typedefs to get to the base type
         x_str = str( x.type.strip_typedefs() )
+        print ( "type = {0}".format( x_str ) )
 
         ########################################
         # BOOST VECTOR
@@ -59,12 +61,12 @@ Types Supported:
             ptr = x['data_']['data_']
             length = x['data_']['size_']
             vals = []
-            max_elements = length
+            max_elements = int(length)
 
-            print "capacity = {0}".format( length )
+            print("capacity = {0}".format( length ))
             if n_elements > -1:
                 max_elements = min( length, n_elements )
-                print "retreiving {0} elements".format( max_elements )
+                print("retreiving {0} elements".format( max_elements ))
 
             ## NOT COMPLEX
             if x_str.find( 'complex' ) < 0:
@@ -84,21 +86,21 @@ Types Supported:
         ########################################
         # STL VECTOR
         ########################################
-        elif x_str.find( "std::vector" ) >= 0:
+        elif x_str.find( "std::vector" )  >= 0:
             ptr = x['_M_impl']['_M_start']
             end = x['_M_impl']['_M_finish']
             vals = []
-            length = end - ptr
-            max_elements = length
+            length = int(end - ptr)
+            max_elements = int(length)
 
-            print "capacity = {0}".format( length )
+            print("capacity = {0}".format( length ))
             if n_elements > -1:
                 max_elements = min( length, n_elements )
-                print "retreiving {0} elements".format( max_elements )
+                print("retreiving {0} elements".format( max_elements ))
 
             element_count = 0
             ## COMPLEX
-            if str(x.type).find( 'std::complex' ) >= 0:
+            if x_str.find( 'std::complex' ) >= 0:
                 for i in range( max_elements ):
                     vals.append( eval( str( ptr.dereference()['_M_value'] ) ) )
                     ptr = ptr + 1
@@ -121,12 +123,12 @@ Types Supported:
             ptr = x['m_storage']['m_data']
             end = x['m_storage']['m_rows']
             vals = []
-            max_elements = end
+            max_elements = int(end)
 
-            print "capacity = {0}".format( end )
+            print("capacity = {0}".format( end ))
             if n_elements > -1:
                 max_elements = min( max_elements, n_elements )
-                print "retreiving {0} elements".format( max_elements )
+                print("retreiving {0} elements".format( max_elements ))
 
             if x_str.find("std::complex") >= 0:
                 for i in range(max_elements):
@@ -145,7 +147,7 @@ Types Supported:
             ##########################################
             # Pointer or Array
             ##########################################
-            print "handling raw pointer with n_elements=%s" % ( n_elements )
+            print("handling raw pointer with n_elements=%s" % ( n_elements ))
             end = n_elements
             vals = []
 
@@ -154,10 +156,10 @@ Types Supported:
             try:
                 _ = x[0]['_M_value']
                 is_complex = True
-                print "handling data as complex"
+                print("handling data as complex")
             except:
                 is_complex = False
-                print "handling data as uncomplex"
+                print("handling data as uncomplex")
 
             if not is_complex:
                 for i in range( n_elements ):

@@ -72,7 +72,7 @@ class ShowFrame( gdb.Command ):
             #
             var = frame.read_var( sym )
             frame_vars[ str(sym) ] = describe( var, sym )
-        print pprint.pformat( frame_vars )
+        print((pprint.pformat( frame_vars )))
 
     # def invoke
          
